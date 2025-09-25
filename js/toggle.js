@@ -1,0 +1,55 @@
+const extendLink = document.getElementById('extend');
+const initSpan = document.getElementById('init');
+
+const textoAdicional = [
+  "estratégia kriativa",
+  "tipografia",
+  "design gráphico",
+  "editorial",
+  "direção criativa",
+  "design de produto digital",
+  "fotographia a.k.a photografia",
+  "curadores de musika",
+  "sinalização & wayfinding",
+  "identidade visual",
+  "bland branding",
+  "motion design",
+  "arquitetos digitæs",
+  "expografia",
+  "código",
+  "guidelines",
+  "embalagem",
+  "naming",
+  "fazedor de imagem",
+  "€ qualquer coisa se você for maluco o suficiente",
+  "tenta a sorte."
+];
+const showtimesAsString = textoAdicional.join(', ');
+
+function changeContent(e) {
+  e.preventDefault();
+
+  // evita execução múltipla
+  if (initSpan.dataset.expanded === 'true') return;
+
+  // pega o HTML atual do span
+  let currentHTML = initSpan.innerHTML;
+
+  // remove o <a ...>...</a> (o link +38)
+  currentHTML = currentHTML.replace(/<a\b[^>]*>.*?<\/a>/i, '');
+
+  // remove o " e" que ficaria antes do link (com espaços/newlines)
+  currentHTML = currentHTML.replace(/\s*e\s*$/i, '').trim();
+
+  // escolhe separador: se já termina com vírgula, só espaço; senão adiciona ", "
+  const separator = currentHTML && !/,\s*$/.test(currentHTML) ? ', ' : (currentHTML ? ' ' : '');
+
+  // concatena e marca como expandido
+  initSpan.innerHTML = currentHTML + separator + showtimesAsString;
+  initSpan.dataset.expanded = 'true';
+
+  // remove o link do DOM (opcional) para limpar o HTML
+  if (extendLink) extendLink.remove();
+}
+
+extendLink.addEventListener('click', changeContent);

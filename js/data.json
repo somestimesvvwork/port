@@ -1,23 +1,15 @@
 [
     {
-        "project": "Site",
-        "year": "2023",
-        "client": "Café Aurora",
-        "description": "Criação de identidade visual completa para uma nova rede de cafeterias.",
+        "project": "Thirdwall",
+        "year": "2025",
+        "client": "Thirdwall",
+        "credits": [
+            "Criação de identidade visual completa para uma nova rede de cafeterias."
+        ],
         "images": [
-            "/images/site/img.png",
-            "/images/site/special.png"
-        ]
-    },
-    {
-        "project": "Site 02",
-        "year": "2023",
-        "client": "Café Aurora",
-        "description": "Criação de identidade visual completa para uma nova rede de cafeterias.",
-        "images": [
-            "/images/site/img.png",
-            "/images/site/special.png",
-            "/images/site/veja.jpg"
+            "/images/thirdwall/thirdwallmock.avif",
+            "/images/thirdwall/candle.avif",
+            "/images/thirdwall/Ativo-2LOGO.avif"
         ]
     }
 ]

@@ -39,6 +39,7 @@ async function loadProjects() {
         renderMedia(currentIndex);
 
         // clique para avançar/retroceder
+        // clique para avançar/retroceder
         caseDiv.addEventListener("click", e => {
           const rect = caseDiv.getBoundingClientRect();
           const clickX = e.clientX - rect.left;
@@ -49,11 +50,22 @@ async function loadProjects() {
           } else {
             // esquerda -> anterior
             currentIndex =
-              (currentIndex - 1 + project.images.length) %
-              project.images.length;
+              (currentIndex - 1 + project.images.length) % project.images.length;
           }
 
           renderMedia(currentIndex);
+        });
+
+        // muda o cursor conforme o lado
+        caseDiv.addEventListener("mousemove", e => {
+          const rect = caseDiv.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+
+          if (mouseX > rect.width / 2) {
+            caseDiv.style.cursor = "e-resize"; // seta para direita
+          } else {
+            caseDiv.style.cursor = "w-resize"; // seta para esquerda
+          }
         });
 
         projectsContainer.appendChild(caseDiv);
@@ -64,5 +76,4 @@ async function loadProjects() {
   }
 }
 
-// dispara
 loadProjects();

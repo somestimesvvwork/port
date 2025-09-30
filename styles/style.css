@@ -24,15 +24,15 @@ a:hover {
   display: flex;
   flex-direction: column;
   top: 0;
+  gap: 0;
   z-index: 1;
 }
 #menu span {
   font-family: "Arial Narrow", Arial, sans-serif;
   font-size: 1.4rem;
-  display: inline-flex;
   letter-spacing: -0.005em;
   background-color: black;
-  line-height: 1;
+  line-height: normal;
 }
 #menu span:hover {
   background-color: white;

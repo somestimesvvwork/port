@@ -27,6 +27,7 @@ a:hover {
   top: 0;
   gap: 0;
   z-index: 1;
+  line-height: 1;
   font-size: 0;
 }
 #menu span {

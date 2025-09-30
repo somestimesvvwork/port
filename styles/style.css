@@ -34,7 +34,7 @@ a:hover {
   background-color: black;
   line-height: 1.14;
 }
-#menu span:hover {
+#menu span:hover, #menu span :tap {
   background-color: white;
 }
 

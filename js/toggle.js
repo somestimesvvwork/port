@@ -53,3 +53,16 @@ function changeContent(e) {
 }
 
 extendLink.addEventListener('click', changeContent);
+
+
+const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+if (isTouch) {
+  const menuItems = document.querySelectorAll("#menu span");
+  menuItems.forEach(item => {
+    item.addEventListener("click", () => {
+      menuItems.forEach(i => i.classList.remove("hover"));
+      item.classList.add("hover");
+    });
+  });
+}

@@ -66,3 +66,9 @@ if (isTouch) {
     });
   });
 }
+
+document.addEventListener("click", e => {
+  if (!e.target.closest("#menu")) {
+    document.querySelectorAll("#menu span").forEach(i => i.classList.remove("hover"));
+  }
+});

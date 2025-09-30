@@ -34,8 +34,12 @@ a:hover {
   background-color: black;
   line-height: 1.14;
 }
-#menu span:hover, #menu span :tap {
+#menu span:hover {
   background-color: white;
+}
+#menu span.hover {
+  background-color: black;
+  color: white;
 }
 
 .projects {

@@ -4,6 +4,20 @@
         "year": "2025",
         "client": "Thirdwall",
         "credits": [
+            "Nome 02",
+            "Nome 01"
+        ],
+        "images": [
+            "/images/thirdwall/candle.avif",
+            "/images/thirdwall/thirdwallmock.avif",
+            "/images/thirdwall/Ativo-2LOGO.avif"
+        ]
+    },
+    {
+        "project": "Thirdwall",
+        "year": "2025",
+        "client": "Thirdwall",
+        "credits": [
             "Criação de identidade visual completa para uma nova rede de cafeterias."
         ],
         "images": [

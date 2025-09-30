@@ -52,6 +52,7 @@ span:hover.hover {
   gap: 10px;
   width: 100%;
   padding-top: 20vh;
+  padding-bottom: 10px;
 }
 
 .case {

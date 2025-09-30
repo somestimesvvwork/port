@@ -13,16 +13,6 @@ body {
   /* Standard syntax */
 }
 
-span {
-  font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: -0.005em;
-  background-color: black;
-}
-span:hover {
-  background-color: white;
-}
-
 a {
   color: blue;
 }
@@ -33,10 +23,21 @@ a:hover {
 #menu {
   display: flex;
   flex-direction: column;
-  position: block;
+  flex-wrap: wrap;
   top: 0;
+  gap: 0;
   z-index: 1;
   font-size: 0;
+}
+#menu span {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 1.4rem;
+  display: inline-flex;
+  letter-spacing: -0.005em;
+  background-color: black;
+}
+#menu span:hover {
+  background-color: white;
 }
 
 .projects {

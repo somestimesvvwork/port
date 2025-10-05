@@ -14,6 +14,9 @@ async function loadProjects() {
         // Adiciona o case ao DOM primeiro para obter a largura real
         projectsContainer.appendChild(caseDiv);
         
+        // AGUARDA um frame para garantir que o DOM foi atualizado (fix Safari)
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        
         // Agora calcula com a largura REAL do container
         const realContainerWidth = caseDiv.offsetWidth;
         
@@ -36,11 +39,16 @@ async function loadProjects() {
         });
 
         const heights = await Promise.all(mediaPromises);
+        
+        console.log('📊 Alturas calculadas:', heights);
+        console.log('📏 Largura real do container:', realContainerWidth);
+        
         const maxHeight = heights.length > 0 
           ? Math.min(Math.max(...heights), window.innerHeight * 0.7)
           : window.innerHeight * 0.5;
         
         caseDiv.style.height = `${maxHeight}px`;
+        console.log('📐 Altura final do case:', maxHeight);
 
         let currentIndex = 0;
 
@@ -103,20 +111,46 @@ async function loadProjects() {
 
         // Função para obter dimensões do vídeo
         function getVideoDimensions(src, containerWidth) {
-          return new Promise(resolve => {
+          return new Promise((resolve, reject) => {
             const video = document.createElement('video');
             video.src = src;
             video.preload = 'metadata';
+            video.muted = true; // Safari precisa disso
+            video.playsInline = true; // Safari precisa disso
+            
+            let resolved = false;
+            
+            // Timeout de segurança
+            const timeout = setTimeout(() => {
+              if (!resolved) {
+                console.warn('⏱️ Timeout ao carregar vídeo:', src);
+                resolved = true;
+                resolve(containerWidth * (9/16));
+              }
+            }, 5000);
             
             video.onloadedmetadata = () => {
-              const scaledHeight = video.videoHeight * (containerWidth / video.videoWidth);
-              resolve(scaledHeight);
+              if (!resolved) {
+                clearTimeout(timeout);
+                resolved = true;
+                
+                const scaledHeight = video.videoHeight * (containerWidth / video.videoWidth);
+                console.log(`📹 Vídeo ${src}: ${video.videoWidth}x${video.videoHeight} -> altura: ${scaledHeight}px`);
+                resolve(scaledHeight);
+              }
             };
             
-            video.onerror = () => {
-              console.warn('Erro ao carregar vídeo:', src);
-              resolve(containerWidth * (9/16)); // fallback 16:9
+            video.onerror = (e) => {
+              if (!resolved) {
+                clearTimeout(timeout);
+                resolved = true;
+                console.error('❌ Erro ao carregar vídeo:', src, e);
+                resolve(containerWidth * (9/16));
+              }
             };
+            
+            // Safari às vezes precisa de um load() explícito
+            video.load();
           });
         }
 

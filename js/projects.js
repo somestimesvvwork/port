@@ -11,18 +11,23 @@ async function loadProjects() {
         caseDiv.classList.add("case");
 
         // Calcula altura para TODAS as mídias (imagens e vídeos)
+        // Adiciona o case ao DOM primeiro para obter a largura real
+        projectsContainer.appendChild(caseDiv);
+        
+        // Agora calcula com a largura REAL do container
+        const realContainerWidth = caseDiv.offsetWidth;
+        
         const mediaPromises = project.images.map(async (src) => {
           if (isVideo(src)) {
             // Para vídeos locais, busca as dimensões
-            return getVideoDimensions(src);
+            return getVideoDimensions(src, realContainerWidth);
           } else {
             // Para imagens normais
             return new Promise(resolve => {
               const img = new Image();
               img.src = src;
               img.onload = () => {
-                const containerWidth = window.innerWidth * 0.95;
-                const scaledHeight = img.naturalHeight * (containerWidth / img.naturalWidth);
+                const scaledHeight = img.naturalHeight * (realContainerWidth / img.naturalWidth);
                 resolve(scaledHeight);
               };
               img.onerror = () => resolve(0);
@@ -88,21 +93,20 @@ async function loadProjects() {
         }
 
         // Função para obter dimensões do vídeo
-        function getVideoDimensions(src) {
+        function getVideoDimensions(src, containerWidth) {
           return new Promise(resolve => {
             const video = document.createElement('video');
             video.src = src;
             video.preload = 'metadata';
             
             video.onloadedmetadata = () => {
-              const containerWidth = window.innerWidth * 0.95;
               const scaledHeight = video.videoHeight * (containerWidth / video.videoWidth);
               resolve(scaledHeight);
             };
             
             video.onerror = () => {
               console.warn('Erro ao carregar vídeo:', src);
-              resolve(window.innerWidth * 0.95 * (9/16)); // fallback 16:9
+              resolve(containerWidth * (9/16)); // fallback 16:9
             };
           });
         }

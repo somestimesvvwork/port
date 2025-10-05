@@ -71,13 +71,13 @@ span:hover.hover {
   height: 100%;
 }
 
-.case img, .case iframe {
+.case img, .case video, .case iframe {
   opacity: 0;
   transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
-.case img.show, .case iframe.show {
+.case img.show, .case video.show, .case iframe.show {
   opacity: 1;
 }
 

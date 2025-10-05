@@ -20,10 +20,12 @@ async function loadProjects() {
         // Agora calcula com a largura REAL do container
         const realContainerWidth = caseDiv.offsetWidth;
         
-        const mediaPromises = project.images.map(async (src) => {
+        const mediaPromises = project.images.map(async (src, index) => {
           if (isVideo(src)) {
             // Para vídeos locais, busca as dimensões
-            return getVideoDimensions(src, realContainerWidth);
+            const height = await getVideoDimensions(src, realContainerWidth);
+            console.log(`🎬 [${index}] Vídeo: ${src} -> ${height}px`);
+            return height;
           } else {
             // Para imagens normais
             return new Promise(resolve => {
@@ -31,9 +33,13 @@ async function loadProjects() {
               img.src = src;
               img.onload = () => {
                 const scaledHeight = img.naturalHeight * (realContainerWidth / img.naturalWidth);
+                console.log(`🖼️ [${index}] Imagem: ${src} -> ${scaledHeight}px`);
                 resolve(scaledHeight);
               };
-              img.onerror = () => resolve(0);
+              img.onerror = () => {
+                console.warn(`❌ [${index}] Erro ao carregar imagem:`, src);
+                resolve(0);
+              };
             });
           }
         });
@@ -41,14 +47,19 @@ async function loadProjects() {
         const heights = await Promise.all(mediaPromises);
         
         console.log('📊 Alturas calculadas:', heights);
+        console.log('📊 Número de itens:', project.images.length);
         console.log('📏 Largura real do container:', realContainerWidth);
         
-        const maxHeight = heights.length > 0 
-          ? Math.min(Math.max(...heights), window.innerHeight * 0.7)
+        // Filtra valores inválidos (0 ou NaN)
+        const validHeights = heights.filter(h => h > 0);
+        
+        const maxHeight = validHeights.length > 0 
+          ? Math.min(Math.max(...validHeights), window.innerHeight * 0.7)
           : window.innerHeight * 0.5;
         
         caseDiv.style.height = `${maxHeight}px`;
         console.log('📐 Altura final do case:', maxHeight);
+        console.log('📐 Maior altura calculada:', Math.max(...validHeights));
 
         let currentIndex = 0;
 

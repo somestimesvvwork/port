@@ -1,8 +1,21 @@
 [
     {
+        "project": "Danki",
+        "year": "2025",
+        "client": "Estúdio Gole & Danki",
+        "credits": [
+            "Nome 02",
+            "Nome 01"
+        ],
+        "images": [
+            "/images/danki/img.png",
+            "/images/danki/05-danki.mp4"
+        ]
+    },
+    {
         "project": "Thirdwall",
         "year": "2025",
-        "client": "Thirdwall",
+        "client": "Estúdio Gole",
         "credits": [
             "Nome 02",
             "Nome 01"

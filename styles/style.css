@@ -74,6 +74,7 @@ span:hover.hover {
 .case img, .case iframe {
   opacity: 0;
   transition: opacity 0.8s ease;
+  pointer-events: none;
 }
 
 .case img.show, .case iframe.show {
@@ -87,5 +88,8 @@ span:hover.hover {
   }
   .case {
     width: 60%;
+  }
+  .projects {
+    gap: 20vh;
   }
 }/*# sourceMappingURL=style.css.map */

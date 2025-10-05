@@ -58,10 +58,18 @@ async function loadProjects() {
             video.muted = true;
             video.playsInline = true;
             video.controls = false;
+            video.setAttribute('playsinline', ''); // Fix Safari iOS
+            video.setAttribute('webkit-playsinline', ''); // Fix Safari iOS older
             video.style.width = "100%";
             video.style.height = "100%";
             video.style.objectFit = "contain";
-            video.style.pointerEvents = "none"; // Permite clique no container
+            video.style.pointerEvents = "none";
+            video.style.display = "block"; // Fix Safari
+            
+            // Force play on Safari
+            video.addEventListener('loadedmetadata', () => {
+              video.play().catch(e => console.warn('Autoplay bloqueado:', e));
+            });
             
             mediaElement = video;
             
@@ -75,6 +83,7 @@ async function loadProjects() {
             img.style.width = "100%";
             img.style.height = "100%";
             img.style.objectFit = "contain";
+            img.style.display = "block"; // Fix Safari
             mediaElement = img;
           }
 

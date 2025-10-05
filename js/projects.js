@@ -23,9 +23,9 @@ async function loadProjects() {
         const mediaPromises = project.images.map(async (src, index) => {
           if (isVideo(src)) {
             // Para vídeos locais, busca as dimensões
-            const height = await getVideoDimensions(src, realContainerWidth);
-            console.log(`🎬 [${index}] Vídeo: ${src} -> ${height}px`);
-            return height;
+            const dimensions = await getVideoDimensions(src, realContainerWidth);
+            console.log(`🎬 [${index}] Vídeo: ${src} -> altura: ${dimensions.height}px, largura proporcional: ${dimensions.scaledWidth}px`);
+            return dimensions;
           } else {
             // Para imagens normais
             return new Promise(resolve => {
@@ -33,12 +33,13 @@ async function loadProjects() {
               img.src = src;
               img.onload = () => {
                 const scaledHeight = img.naturalHeight * (realContainerWidth / img.naturalWidth);
-                console.log(`🖼️ [${index}] Imagem: ${src} -> ${scaledHeight}px`);
-                resolve(scaledHeight);
+                const scaledWidth = img.naturalWidth * (realContainerWidth / img.naturalWidth);
+                console.log(`🖼️ [${index}] Imagem: ${src} -> altura: ${scaledHeight}px, largura: ${scaledWidth}px`);
+                resolve({ height: scaledHeight, scaledWidth: scaledWidth });
               };
               img.onerror = () => {
                 console.warn(`❌ [${index}] Erro ao carregar imagem:`, src);
-                resolve(0);
+                resolve({ height: 0, scaledWidth: 0 });
               };
             });
           }
@@ -136,7 +137,7 @@ async function loadProjects() {
               if (!resolved) {
                 console.warn('⏱️ Timeout ao carregar vídeo:', src);
                 resolved = true;
-                resolve(containerWidth * (9/16));
+                resolve({ height: containerWidth * (9/16), scaledWidth: containerWidth });
               }
             }, 5000);
             
@@ -146,8 +147,9 @@ async function loadProjects() {
                 resolved = true;
                 
                 const scaledHeight = video.videoHeight * (containerWidth / video.videoWidth);
+                const scaledWidth = containerWidth; // Vídeo sempre ocupa largura total
                 console.log(`📹 Vídeo ${src}: ${video.videoWidth}x${video.videoHeight} -> altura: ${scaledHeight}px`);
-                resolve(scaledHeight);
+                resolve({ height: scaledHeight, scaledWidth: scaledWidth });
               }
             };
             
@@ -156,7 +158,7 @@ async function loadProjects() {
                 clearTimeout(timeout);
                 resolved = true;
                 console.error('❌ Erro ao carregar vídeo:', src, e);
-                resolve(containerWidth * (9/16));
+                resolve({ height: containerWidth * (9/16), scaledWidth: containerWidth });
               }
             };
             

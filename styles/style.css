@@ -53,11 +53,14 @@ span:hover.hover {
   width: 100%;
   padding-top: 20vh;
   padding-bottom: 10px;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  box-sizing: border-box;
 }
 
 .case {
   display: flex;
-  width: 95%;
+  width: 100%;
   overflow: hidden;
   position: relative;
   align-items: center;
@@ -97,10 +100,12 @@ span:hover.hover {
     position: fixed;
   }
   .case {
-    width: 60%;
+    width: 100%;
   }
   .projects {
     gap: 20vh;
+    padding-left: 20%;
+    padding-right: 20%;
   }
 }
 @supports (-webkit-touch-callout: none) {

@@ -3,10 +3,7 @@ const initSpan = document.getElementById('init');
 
 const textoAdicional = [
   "estratégia kriativa",
-  "tipografia",
   "design gráphico",
-  "editorial",
-  "direção criativa",
   "design de produto digital",
   "fotographia a.k.a photografia",
   "curadores de musika",
@@ -15,7 +12,6 @@ const textoAdicional = [
   "bland branding",
   "motion design",
   "arquitetos digitæs",
-  "expografia",
   "código",
   "guidelines",
   "embalagem",
